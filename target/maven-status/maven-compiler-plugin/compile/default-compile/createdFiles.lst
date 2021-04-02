@@ -1,5 +1,10 @@
 pedrocoelho/javamslearning/msscbrewer/web/model/BeerDto$BeerDtoBuilder.class
+pedrocoelho/javamslearning/msscbrewer/web/controller/CustomerController.class
+pedrocoelho/javamslearning/msscbrewer/services/CustomerService.class
 pedrocoelho/javamslearning/msscbrewer/web/controller/BeerController.class
 pedrocoelho/javamslearning/msscbrewer/services/BeerService.class
+pedrocoelho/javamslearning/msscbrewer/services/CustomerServiceImpl.class
+pedrocoelho/javamslearning/msscbrewer/web/model/CustomerDto.class
 pedrocoelho/javamslearning/msscbrewer/web/model/BeerDto.class
 pedrocoelho/javamslearning/msscbrewer/services/BeerServiceImpl.class
+pedrocoelho/javamslearning/msscbrewer/web/model/CustomerDto$CustomerDtoBuilder.class
