@@ -20,8 +20,7 @@ public class BeerController {
     }
 
     @GetMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId) {
-
+    public ResponseEntity<BeerDto> handleGet(@PathVariable("beerId") UUID beerId) {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
@@ -41,5 +40,12 @@ public class BeerController {
         beerService.updateBeer(beerId, beerDto);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping({"/{beerId}"})
+    // avoids the need to return ResponseEntity, in the case no more info is returned.
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void handleDelete(@PathVariable UUID beerId) {
+        beerService.deleteBeer(beerId);
     }
 }

@@ -1,8 +1,7 @@
-package pedrocoelho.javamslearning.msscbrewer.controller;
+package pedrocoelho.javamslearning.msscbrewer.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pedrocoelho.javamslearning.msscbrewer.services.BeerService;
-import pedrocoelho.javamslearning.msscbrewer.web.controller.BeerController;
 import pedrocoelho.javamslearning.msscbrewer.web.model.BeerDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,7 @@ public class BeerControllerTest {
     @Before
     public void setUp() {
         validBeer = BeerDto.builder()
-                .id(UUID.fromString("c06e25a2-86e4-481c-833d-d8876120317b"))
+                .id(UUID.randomUUID())
                 .beerName("Sagres")
                 .beerStyle("Xixi")
                 .upc(123456789012L)
@@ -49,14 +48,15 @@ public class BeerControllerTest {
     }
 
     @Test
-    public void getBeer() throws Exception {
+    public void handleGet() throws Exception {
         given(beerService.getBeerById(any(UUID.class))).willReturn(validBeer);
 
-        mockMvc.perform(get("/api/v1/beer/" + validBeer.getId().toString()).accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/beer/" + validBeer.getId().toString())
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(validBeer.getId().toString())))
-                .andExpect(jsonPath("$.beerName", is("Sagres")));
+                .andExpect(jsonPath("$.beerName", is(validBeer.getBeerName())));
     }
 
     @Test
@@ -86,5 +86,18 @@ public class BeerControllerTest {
                 .andExpect(status().isNoContent());
 
         then(beerService).should().updateBeer(any(), any());
+    }
+
+    @Test
+    public void handleDelete() throws Exception {
+        BeerDto beerDto = validBeer;
+        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
+
+        mockMvc.perform(delete("/api/v1/beer/" + UUID.randomUUID())
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(beerDtoJson))
+                .andExpect(status().isNoContent());
+
+        then(beerService).should().deleteBeer(any());
     }
 }
