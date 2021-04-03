@@ -1,16 +1,15 @@
-package pedrocoelho.javamslearning.msscbrewer.web.controller;
+package pedrocoelho.javamslearning.msscbrewer.web.controller.v2;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pedrocoelho.javamslearning.msscbrewer.services.BeerService;
-import pedrocoelho.javamslearning.msscbrewer.web.model.BeerDto;
+import pedrocoelho.javamslearning.msscbrewer.services.v2.BeerService;
+import pedrocoelho.javamslearning.msscbrewer.web.model.v2.BeerDto;
 
 import java.util.UUID;
 
-@Deprecated // there are a MAJOR version released
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v2/beer")
 @RestController
 public class BeerController {
 
@@ -25,13 +24,13 @@ public class BeerController {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
-    @PostMapping // will handle POST - create new beer
+    @PostMapping
     public ResponseEntity handlePost(@RequestBody BeerDto beer) {
         BeerDto savedBeerDto = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
         // todo: add hostname to url
-        headers.add("Location", "/api/v1/beer/" + savedBeerDto.getId().toString());
+        headers.add("Location", "/api/v2/beer/" + savedBeerDto.getId().toString());
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
@@ -44,9 +43,9 @@ public class BeerController {
     }
 
     @DeleteMapping({"/{beerId}"})
-    // avoids the need to return ResponseEntity, in the case no more info is returned.
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void handleDelete(@PathVariable UUID beerId) {
         beerService.deleteBeer(beerId);
     }
 }
+

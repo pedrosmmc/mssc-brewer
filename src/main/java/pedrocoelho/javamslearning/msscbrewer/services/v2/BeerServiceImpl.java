@@ -1,8 +1,10 @@
-package pedrocoelho.javamslearning.msscbrewer.services;
+package pedrocoelho.javamslearning.msscbrewer.services.v2;
+
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pedrocoelho.javamslearning.msscbrewer.web.model.BeerDto;
+import pedrocoelho.javamslearning.msscbrewer.web.model.v2.BeerDto;
+import pedrocoelho.javamslearning.msscbrewer.web.model.v2.BeerStyleEnum;
 
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ public class BeerServiceImpl implements BeerService {
     public BeerDto getBeerById(UUID beerId) {
         return BeerDto.builder().id(beerId)
                 .beerName("Amber Leef")
-                .beerStyle("Amber")
+                .beerStyle(BeerStyleEnum.AMBER)
                 .build();
     }
 
@@ -22,7 +24,7 @@ public class BeerServiceImpl implements BeerService {
         return BeerDto.builder()
                 .id(UUID.randomUUID())
                 .beerName("Super Book")
-                .beerStyle("Golden")
+                .beerStyle(BeerStyleEnum.GOLDEN)
                 .build();
     }
 
