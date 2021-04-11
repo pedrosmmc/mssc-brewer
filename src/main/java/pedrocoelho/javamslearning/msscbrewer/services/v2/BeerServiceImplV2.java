@@ -10,12 +10,13 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class BeerServiceImpl implements BeerService {
+public class BeerServiceImplV2 implements BeerServiceV2 {
     @Override
     public BeerDto getBeerById(UUID beerId) {
         return BeerDto.builder().id(beerId)
-                .beerName("Amber Leef")
-                .beerStyle(BeerStyleEnum.AMBER)
+                .name("Amber Leef")
+                .style(BeerStyleEnum.AMBER)
+                .upc(999999999L)
                 .build();
     }
 
@@ -23,15 +24,16 @@ public class BeerServiceImpl implements BeerService {
     public BeerDto saveNewBeer(BeerDto beer) {
         return BeerDto.builder()
                 .id(UUID.randomUUID())
-                .beerName("Super Book")
-                .beerStyle(BeerStyleEnum.GOLDEN)
+                .name("Super Book")
+                .style(BeerStyleEnum.GOLDEN)
+                .upc(999999999L)
                 .build();
     }
 
     @Override
     public void updateBeer(UUID beerId, BeerDto beerDto) {
         //todo: add a real impl to update
-        log.debug("Updating beer "+ beerDto.getBeerName() + "(" + beerId + ")" +"...");
+        log.debug("Updating beer "+ beerDto.getName() + "(" + beerId + ")" +"...");
     }
 
     @Override

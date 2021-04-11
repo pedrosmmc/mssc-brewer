@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder //The builder annotation creates a so-called 'builder' aspect to the class that is annotated or the class that contains a member which is annotated with @Builder.
 public class BeerDto {
     private UUID id;
-    private String beerName;
+    private String name;
     private String beerStyle;
     private Long upc;
 }

@@ -4,7 +4,7 @@ import pedrocoelho.javamslearning.msscbrewer.web.model.v2.BeerDto;
 
 import java.util.UUID;
 
-public interface BeerService {
+public interface BeerServiceV2 {
     BeerDto getBeerById(UUID beerId);
 
     BeerDto saveNewBeer(BeerDto beer);

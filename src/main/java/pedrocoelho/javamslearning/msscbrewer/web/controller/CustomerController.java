@@ -12,7 +12,8 @@ import java.util.UUID;
 @RequestMapping("/api/v1/customer")
 @RestController
 public class CustomerController {
-    private CustomerService customerService;
+
+    private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -24,19 +25,21 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> handlePost(@RequestBody CustomerDto customerDto) {
-        CustomerDto savedCustomer = customerService.createCustomer(customerDto);
+    public ResponseEntity handlePost(@RequestBody CustomerDto customer) {
+        CustomerDto savedCustomerDto = customerService.createCustomer(customer);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/customer" + savedCustomer.getId().toString());
+        // todo: add hostname to url
+        headers.add("Location", "/api/v1/customer/" + savedCustomerDto.getId());
 
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
     @PutMapping({"/{customerId}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void handlePut(@PathVariable UUID customerId, @RequestBody CustomerDto customerDto) {
+    public ResponseEntity handleUpdate(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto) {
         customerService.updateCustomer(customerId, customerDto);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping({"/{customerId}"})
@@ -45,3 +48,4 @@ public class CustomerController {
         customerService.deleteCustomer(customerId);
     }
 }
+

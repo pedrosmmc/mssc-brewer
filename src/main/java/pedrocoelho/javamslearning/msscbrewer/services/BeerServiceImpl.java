@@ -1,7 +1,9 @@
 package pedrocoelho.javamslearning.msscbrewer.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import pedrocoelho.javamslearning.msscbrewer.web.model.BeerDto;
 
 import java.util.UUID;
@@ -11,17 +13,20 @@ import java.util.UUID;
 public class BeerServiceImpl implements BeerService {
     @Override
     public BeerDto getBeerById(UUID beerId) {
+        log.debug("GET request...");
         return BeerDto.builder().id(beerId)
-                .beerName("Amber Leef")
+                .name("Amber Leef")
                 .beerStyle("Amber")
+                .upc(123123123123L)
                 .build();
     }
 
     @Override
     public BeerDto saveNewBeer(BeerDto beer) {
+        log.debug("POST request...");
         return BeerDto.builder()
                 .id(UUID.randomUUID())
-                .beerName("Super Book")
+                .name("Super Book")
                 .beerStyle("Golden")
                 .build();
     }
@@ -29,7 +34,7 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public void updateBeer(UUID beerId, BeerDto beerDto) {
         //todo: add a real impl to update
-        log.debug("Updating beer "+ beerDto.getBeerName() + "(" + beerId + ")" +"...");
+        log.debug("Updating beer "+ beerDto.getName() + "(" + beerId + ")" +"...");
     }
 
     @Override

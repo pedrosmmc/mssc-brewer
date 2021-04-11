@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Positive;
 import java.util.UUID;
 
 @Data
@@ -12,8 +15,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class BeerDto {
+
+    @Null
     private UUID id;
-    private String beerName;
-    private BeerStyleEnum beerStyle;
+
+    @NotBlank
+    private String name;
+
+    //todo: enum validation
+    private BeerStyleEnum style;
+
+    @Positive
     private Long upc;
 }

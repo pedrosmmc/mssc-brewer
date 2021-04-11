@@ -1,8 +1,6 @@
 package pedrocoelho.javamslearning.msscbrewer.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pedrocoelho.javamslearning.msscbrewer.services.CustomerService;
-import pedrocoelho.javamslearning.msscbrewer.web.model.CustomerDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import pedrocoelho.javamslearning.msscbrewer.services.CustomerService;
+import pedrocoelho.javamslearning.msscbrewer.web.model.CustomerDto;
+import pedrocoelho.javamslearning.msscbrewer.web.controller.CustomerController;
 
 import java.util.UUID;
 
@@ -49,11 +50,11 @@ public class CustomerControllerTest {
     public void handleGet() throws Exception {
         given(customerService.getCustomerById(any(UUID.class))).willReturn(validCustomer);
 
-        mockMvc.perform(get("/api/v1/customer/" + validCustomer.getId().toString())
+        mockMvc.perform(get("/api/v1/customer/" + validCustomer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(validCustomer.getId().toString())))
+                .andExpect(jsonPath("$.id", is(validCustomer.getId())))
                 .andExpect(jsonPath("$.name", is(validCustomer.getName())));
     }
 
