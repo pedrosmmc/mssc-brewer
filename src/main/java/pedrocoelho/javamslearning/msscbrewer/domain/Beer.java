@@ -1,22 +1,22 @@
-package pedrocoelho.javamslearning.msscbrewer.web.model.v2;
+package pedrocoelho.javamslearning.msscbrewer.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pedrocoelho.javamslearning.msscbrewer.web.model.v2.BeerStyleEnum;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BeerDto {
-
+public class Beer {
     @Null
     private UUID id;
 
@@ -29,7 +29,7 @@ public class BeerDto {
     @Positive
     private Long upc;
 
-    private OffsetDateTime createdDate;
+    private Timestamp createdDate;
 
-    private OffsetDateTime updatedDate;
+    private Timestamp updatedDate;
 }

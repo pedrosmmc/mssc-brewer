@@ -1,18 +1,20 @@
-package pedrocoelho.javamslearning.msscbrewer.web.model;
+package pedrocoelho.javamslearning.msscbrewer.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDto {
+public class Customer {
 
     @Null
     private UUID id;

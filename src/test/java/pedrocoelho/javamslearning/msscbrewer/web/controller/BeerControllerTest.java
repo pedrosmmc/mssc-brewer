@@ -1,14 +1,12 @@
 package pedrocoelho.javamslearning.msscbrewer.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import pedrocoelho.javamslearning.msscbrewer.services.BeerService;
 import pedrocoelho.javamslearning.msscbrewer.web.model.BeerDto;
@@ -22,7 +20,6 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(BeerController.class)
 public class BeerControllerTest {
 
@@ -37,12 +34,12 @@ public class BeerControllerTest {
 
     BeerDto validBeer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validBeer = BeerDto.builder()
                 .id(UUID.randomUUID())
                 .name("Sagres")
-                .beerStyle("Xixi")
+                .style("Xixi")
                 .upc(123456789012L)
                 .build();
     }
@@ -55,7 +52,7 @@ public class BeerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(validBeer.getId())))
+                .andExpect(jsonPath("$.id", is(validBeer.getId().toString())))
                 .andExpect(jsonPath("$.name", is(validBeer.getName())));
     }
 
@@ -64,7 +61,7 @@ public class BeerControllerTest {
         BeerDto savedBeer = BeerDto.builder()
                 .id(UUID.randomUUID())
                 .name("Tuborg")
-                .beerStyle("Golden")
+                .style("Golden")
                 .upc(123435256564L)
                 .build();
 

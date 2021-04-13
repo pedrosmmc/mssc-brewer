@@ -15,6 +15,6 @@ import java.util.UUID;
 public class BeerDto {
     private UUID id;
     private String name;
-    private String beerStyle;
+    private String style;
     private Long upc;
 }

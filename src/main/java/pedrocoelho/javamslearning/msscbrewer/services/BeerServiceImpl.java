@@ -16,7 +16,7 @@ public class BeerServiceImpl implements BeerService {
         log.debug("GET request...");
         return BeerDto.builder().id(beerId)
                 .name("Amber Leef")
-                .beerStyle("Amber")
+                .style("Amber")
                 .upc(123123123123L)
                 .build();
     }
@@ -27,7 +27,7 @@ public class BeerServiceImpl implements BeerService {
         return BeerDto.builder()
                 .id(UUID.randomUUID())
                 .name("Super Book")
-                .beerStyle("Golden")
+                .style("Golden")
                 .build();
     }
 

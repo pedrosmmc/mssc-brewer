@@ -1,18 +1,15 @@
 package pedrocoelho.javamslearning.msscbrewer.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import pedrocoelho.javamslearning.msscbrewer.services.CustomerService;
 import pedrocoelho.javamslearning.msscbrewer.web.model.CustomerDto;
-import pedrocoelho.javamslearning.msscbrewer.web.controller.CustomerController;
 
 import java.util.UUID;
 
@@ -23,7 +20,6 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(CustomerController.class)
 public class CustomerControllerTest {
 
@@ -38,7 +34,7 @@ public class CustomerControllerTest {
 
     CustomerDto validCustomer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validCustomer = CustomerDto.builder()
                 .id(UUID.randomUUID())
@@ -50,17 +46,18 @@ public class CustomerControllerTest {
     public void handleGet() throws Exception {
         given(customerService.getCustomerById(any(UUID.class))).willReturn(validCustomer);
 
-        mockMvc.perform(get("/api/v1/customer/" + validCustomer.getId())
+        mockMvc.perform(get("/api/v1/customer/" + UUID.randomUUID())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(validCustomer.getId())))
+                .andExpect(jsonPath("$.id", is(validCustomer.getId().toString())))
                 .andExpect(jsonPath("$.name", is(validCustomer.getName())));
     }
 
     @Test
     public void handlePost() throws Exception {
         CustomerDto customerDto = validCustomer;
+        customerDto.setId(null);
         CustomerDto savedCustomer = CustomerDto.builder()
                 .id(UUID.randomUUID()).name("Nietzsche").build();
         String customerDtoJson = objectMapper.writeValueAsString(customerDto);
@@ -76,6 +73,7 @@ public class CustomerControllerTest {
     @Test
     public void handlePut() throws Exception {
         CustomerDto customerDto = validCustomer;
+        customerDto.setId(null);
         String customerDtoJson = objectMapper.writeValueAsString(customerDto);
 
         mockMvc.perform(put("/api/v1/customer/" + UUID.randomUUID())
